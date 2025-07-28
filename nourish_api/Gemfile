@@ -63,3 +63,10 @@ group :test do
 end
 
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'blueprinter'
+
+gem 'rack-cors'
+
+gem 'jwt'
+
