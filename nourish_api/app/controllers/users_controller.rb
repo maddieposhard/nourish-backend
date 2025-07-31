@@ -1,4 +1,11 @@
 class UsersController < ApplicationController
+    before_action :authenticate_request, except: [:index, :show]
+
+    def index 
+        users = User.all
+        render json: users, status: :ok
+    end
+
     def create
         user = User.new(user_params)
         if user.save
@@ -16,6 +23,6 @@ class UsersController < ApplicationController
     private
     
     def user_params
-      params.permit(:user_id, :email, :name, :password, :password_confirmation)
-    end
+        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end      
 end
