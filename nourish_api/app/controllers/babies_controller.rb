@@ -1,4 +1,9 @@
 class BabiesController < ApplicationController
+    def index
+        babies = Baby.all
+        render json: babies, status: :ok
+    end
+    
     def create
         baby = Baby.new(baby_params)
         if baby.save
