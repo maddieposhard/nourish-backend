@@ -1,11 +1,18 @@
 class BabiesController < ApplicationController
+    before_action :authenticate_request, only: [:my_babies]
+
     def index
         babies = Baby.all
         render json: babies, status: :ok
     end
-    
+
+    def my_babies
+        babies = @current_user.babies
+        render json: babies, status: :ok
+    end
+
     def create
-        baby = Baby.new(baby_params)
+        baby = @current_user.babies.new(baby_params)
         if baby.save
             render json: baby, status: :created
         else
@@ -21,6 +28,6 @@ class BabiesController < ApplicationController
     private
 
     def baby_params
-        params.require(:baby).permit(:user_id, :name)
+        params.require(:baby).permit( :name)
     end
 end

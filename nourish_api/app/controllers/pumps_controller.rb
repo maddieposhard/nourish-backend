@@ -1,6 +1,8 @@
 class PumpsController < ApplicationController
+    before_action :authenticate_request
+
     def index
-        pumps = Pump.all
+        pumps = Pump.where(user_id: current_user.id)
         render json: pumps, status: :ok
     end
 
@@ -10,7 +12,7 @@ class PumpsController < ApplicationController
     end
 
     def create
-        pump = Pump.new(pump_params)
+        pump = Pump.new(pump_params.merge(user_id: @current_user.id))
         if pump.save
             render json: pump, status: :created
         else
@@ -32,10 +34,26 @@ class PumpsController < ApplicationController
         head :no_content
     end
 
+    def by_date
+        unless params[:date].present?
+          return render json: { error: "Missing date parameter" }, status: :bad_request
+        end
+      
+        begin
+          date = Date.parse(params[:date])
+        rescue ArgumentError
+          return render json: { error: "Invalid date format" }, status: :unprocessable_entity
+        end
+      
+        pumps = @current_user.pumps.where(date: date)
+        render json: pumps.as_json(only: [:id, :date, :time, :length, :ounces, :notes]), status: :ok
+      end
+      
+
     private
 
     def pump_params
-        params.require(:pump).permit(:user_id, :date, :time, :length, :ounces, :notes)
+        params.require(:pump).permit(:date, :time, :length, :ounces, :notes)
     end
 
 end

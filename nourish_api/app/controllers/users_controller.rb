@@ -20,6 +20,10 @@ class UsersController < ApplicationController
         render json: user, status: :ok
     end
 
+    def profile
+        render json: @current_user, status: :ok
+    end
+    
     private
     
     def user_params
