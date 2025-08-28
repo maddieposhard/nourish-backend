@@ -2,7 +2,7 @@ class PumpsController < ApplicationController
     before_action :authenticate_request
 
     def index
-        pumps = Pump.where(user_id: current_user.id)
+        pumps = Pump.where(user_id: @current_user.id)
         render json: pumps, status: :ok
     end
 

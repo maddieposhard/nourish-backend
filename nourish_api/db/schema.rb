@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_28_191505) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_28_171824) do
   create_table "achievements", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -25,6 +25,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_28_191505) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "birthdate"
+    t.string "gender"
     t.index ["user_id"], name: "index_babies_on_user_id"
   end
 
