@@ -1,6 +1,8 @@
 class FeedsController < ApplicationController
+    before_action :authenticate_request
+
     def index
-        feeds = Feed.all
+        feeds = Feed.where(user_id: @current_user.id)
         render json: feeds, status: :ok
     end
 
@@ -10,7 +12,7 @@ class FeedsController < ApplicationController
     end
 
     def create
-        feed = Feed.new(feed_params)
+        feed = Feed.new(feed_params.merge(user_id: @current_user.id))
         if feed.save
             render json: feed, status: :created
         else
@@ -35,7 +37,7 @@ class FeedsController < ApplicationController
     private
 
     def feed_params
-        params.require(:feed).permit(:baby_id, :user_id, :date, :time, :length, :notes)
+        params.require(:feed).permit(:baby_id, :date, :time, :length, :ounces, :feed_type, :notes)
     end
 
 end

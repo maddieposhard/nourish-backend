@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_28_171824) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_09_155523) do
   create_table "achievements", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -50,6 +50,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_28_171824) do
     t.integer "baby_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "feed_type"
+    t.string "string"
+    t.integer "ounces"
     t.index ["baby_id"], name: "index_feeds_on_baby_id"
     t.index ["user_id"], name: "index_feeds_on_user_id"
   end
