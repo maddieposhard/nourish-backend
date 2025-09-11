@@ -34,6 +34,21 @@ class FeedsController < ApplicationController
         head :no_content
     end
 
+    def by_date
+        unless params[:date].present?
+          return render json: { error: "Missing date parameter" }, status: :bad_request
+        end
+      
+        begin
+          date = Date.parse(params[:date])
+        rescue ArgumentError
+          return render json: { error: "Invalid date format" }, status: :unprocessable_entity
+        end
+      
+        feeds = @current_user.feeds.where(date: date)
+        render json: feeds.as_json, status: :ok
+      end
+
     private
 
     def feed_params

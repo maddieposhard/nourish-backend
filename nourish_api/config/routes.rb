@@ -4,8 +4,6 @@
     post 'login', to: 'sessions#create'
 
     resources :babies
-    resources :feeds
-    resources :bottle_feeds
     resources :achievements
 
     get '/my_babies', to: 'babies#my_babies'
@@ -16,5 +14,12 @@
         get 'by_date' 
       end
     end
+
+    resources :feeds do
+      collection do
+        get 'by_date'
+      end
+    end
+    
   end
 
