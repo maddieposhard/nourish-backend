@@ -1,5 +1,5 @@
 class BabiesController < ApplicationController
-    before_action :authenticate_request, only: [:my_babies]
+    before_action :authenticate_request, except: [:index] 
 
     def index
         babies = Baby.all
@@ -24,6 +24,14 @@ class BabiesController < ApplicationController
         baby = Baby.find(params[:id])
         render json: baby, status: :ok
     end
+
+    def destroy
+        baby = Baby.find(params[:id])
+        baby.destroy
+        head :no_content
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: "Baby not found" }, status: :not_found
+      end
 
     private
 
