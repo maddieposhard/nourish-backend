@@ -6,6 +6,7 @@ gem "rails", "~> 8.0.2"
 gem "propshaft"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
+gem 'pg'
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -23,10 +24,9 @@ gem "jbuilder"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+# Use the database-backed adapters for Rails.cache and Active Job
 gem "solid_cache"
 gem "solid_queue"
-gem "solid_cable"
 
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -52,9 +52,6 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
-group :production do
-  gem 'pg'
-end
 
 group :development do
   
