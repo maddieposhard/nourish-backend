@@ -28,6 +28,7 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -51,7 +52,12 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
+group :production do
+  gem 'pg'
+end
+
 group :development do
+  
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
