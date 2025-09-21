@@ -1,0 +1,23 @@
+databases:
+    - name: nourish-backend
+      databaseName: nourish-backend
+      user: nourish-backend
+      plan: free
+
+services:
+    - type: web
+      name: nourish-backend
+      runtime: ruby
+      plan: free
+      buildCommand: './bin/render-build.sh'
+      # preDeployCommand: "./bin/rails db:migrate" # preDeployCommand only available on paid instance types
+      startCommand: './bin/rails server'
+      envVars:
+          - key: DATABASE_URL
+            fromDatabase:
+                name: nourish-backend
+                property: connectionString
+          - key: RAILS_MASTER_KEY
+            sync: false
+          - key: WEB_CONCURRENCY
+            value: 2 # sensible default
